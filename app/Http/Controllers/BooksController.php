@@ -48,6 +48,20 @@ class BooksController extends Controller
         }
 
     }
+    public function index(){
+        return view('books');
+    }
+    public function store(Request $request){
+        $validateData = $request([
+            'name'=>'require|string|max:255',
+            'pages'=>'required|integer',
+            'IBN'=>'required',
+            'category'=>'required',
+            'publisher'=>'required',
+            'yearOfPublication'=>'required',
+            'user_id'=>'required',
+        ]);
+    }
 
 
     
