@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 class BookModel extends Model
 {
     use HasFactory;
-    protected $table ='book_migration';
+    protected $table = 'book_migration';
 
-    protected $fillable =[
+
+    protected $fillable = [
         'name',
         'pages',
         'IBN',
@@ -20,7 +21,9 @@ class BookModel extends Model
         'publisher',
         'yearOfPublication',
         'user_id',
+        // Add other fields as needed
     ];
+
 
     public function user(){
         return this->belongsTo(User::class);

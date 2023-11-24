@@ -4,77 +4,77 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Book;
+use App\Models\BookModel;
 use App\Models\User;
 
 class BooksController extends Controller
 {
-    function createBook(Request $request){
-        $request->validate([
-            'name'=>'required',
-            'author'=>'required',
-            'pages'=>'required',
-            'IBN'=>'required',
-            'category'=>'required',
-            'publisher'=>'required',
-            'yearofPublication'=>'required',
-        ]);
+    // function createBook(Request $request){
+    //     $request->validate([
+    //         'name'=>'required',
+    //         'author'=>'required',
+    //         'pages'=>'required',
+    //         'IBN'=>'required',
+    //         'category'=>'required',
+    //         'publisher'=>'required',
+    //         'yearofPublication'=>'required',
+    //     ]);
 
-        // creating our record
-        $book =Book::create([
-            'name' =>$request->name,
-            'author' =>$request->author,
-            'pages' =>$request->pages,
-            'IBN' =>$request->IBN,
-            'category' =>$request->category,
-            'publisher' =>$request->publisher,
-            'yearofPublication' =>$request->yearofPublication,
+    //     // creating our record
+    //     $book =Book::create([
+    //         'name' =>$request->name,
+    //         'author' =>$request->author,
+    //         'pages' =>$request->pages,
+    //         'IBN' =>$request->IBN,
+    //         'category' =>$request->category,
+    //         'publisher' =>$request->publisher,
+    //         'yearofPublication' =>$request->yearofPublication,
 
-        ]);
+    //     ]);
 
-        // retrieve the book and check if empty
-        $book = Book::find($book->id);
+    //     // retrieve the book and check if empty
+    //     $book = Book::find($book->id);
 
-        // we return a response-whether success or failure
-        if(!$book){
-            return response([
-                'message'=>'unsuccessful!'
-            ]);
+    //     // we return a response-whether success or failure
+    //     if(!$book){
+    //         return response([
+    //             'message'=>'unsuccessful!'
+    //         ]);
 
-        }else {
-            return response([
-                'messsage'=>'successful!',
-                'book'=>$book
-            ]);
-        }
+    //     }else {
+    //         return response([
+    //             'messsage'=>'successful!',
+    //             'book'=>$book
+    //         ]);
+    //     }
 
-    }
+    // }
     public function index(){
         $users=User::all();
         return view('books',compact('users'));
     }
     public function store(Request $request){
-        $validateData = $request([
-            'name'=>'required|string|max:255',
-            'pages'=>'required|integer',
-            'IBN'=>'required',
-            'category'=>'required',
-            'publisher'=>'required',
-            'yearOfPublication'=>'required',
-            'user_id'=>'required',
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'pages' => 'required|integer',
+            'IBN' => 'required|string',
+            'category' => 'required|string',
+            'publisher' => 'required|string',
+            'yop' => 'required|integer',
+            'user_id' => 'required|integer',
         ]);
-        $book= new Books();
-        $book->name = $validateData ['name'];
-        $book->pages = $validateData ['pages'];
-        $book->IBN = $validateData ['IBN'];
-        $book->category = $validateData ['category'];
-        $book->publisher = $validateData ['publisher'];
-        $book->yearOfPublication = $validateData ['yearOfPublication'];
-        $book->user_id = $validateData ['user_id'];
+
+        $book = new BookModel();
+        $book->name =  $validatedData['name'];
+        $book->pages =  $validatedData['pages'];
+        $book->IBN =  $validatedData['IBN'];
+        $book->category =  $validatedData['category'];
+        $book->Publisher =  $validatedData['publisher'];
+        $book->yearOfPublication =  $validatedData['yop'];
+        $book->user_id =  $validatedData['user_id'];
         $book->save();
 
-        return redirect()->back()->with('Success','Data Added Successfully');
-
+        return redirect()->back()->with('success', 'Form submitted successfully!');
     }
 
 
