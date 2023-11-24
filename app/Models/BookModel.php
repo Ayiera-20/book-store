@@ -10,6 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 class BookModel extends Model
 {
     use HasFactory;
+    protected $table ='book_migration';
+
+    protected $fillable =[
+        'name',
+        'pages',
+        'IBN',
+        'category',
+        'publisher',
+        'yearOfPublication',
+        'user_id',
+    ];
 
     public function user(){
         return this->belongsTo(User::class);

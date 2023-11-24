@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Book;
+use App\Models\User;
 
 class BooksController extends Controller
 {
@@ -49,11 +50,12 @@ class BooksController extends Controller
 
     }
     public function index(){
-        return view('books');
+        $users=User::all();
+        return view('books',compact('users'));
     }
     public function store(Request $request){
         $validateData = $request([
-            'name'=>'require|string|max:255',
+            'name'=>'required|string|max:255',
             'pages'=>'required|integer',
             'IBN'=>'required',
             'category'=>'required',
@@ -61,6 +63,18 @@ class BooksController extends Controller
             'yearOfPublication'=>'required',
             'user_id'=>'required',
         ]);
+        $book= new Books();
+        $book->name = $validateData ['name'];
+        $book->pages = $validateData ['pages'];
+        $book->IBN = $validateData ['IBN'];
+        $book->category = $validateData ['category'];
+        $book->publisher = $validateData ['publisher'];
+        $book->yearOfPublication = $validateData ['yearOfPublication'];
+        $book->user_id = $validateData ['user_id'];
+        $book->save();
+
+        return redirect()->back()->with('Success','Data Added Successfully');
+
     }
 
 

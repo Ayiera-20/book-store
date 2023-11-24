@@ -8,11 +8,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Booking Form</h1>
+
+@if(session('success'))
+ <div class="alert alert-success">
+    {{sessions('success')}}
+</div>
+@endif
+    <h1 style="margin-left:400px">Booking Form</h1>
 
     <section>
         <div style="margin-left:400px">
-            <form action=" " method "">
+            <form action="{{route('submit-form')}}" method="post">
+                @csrf
                 <div>
                 <Label for "">Name</Label>
                 <br>
@@ -20,7 +27,7 @@
           <br>
           <Label for "">Pages</Label>
           <br>
-          <input type="text" name="pages">
+          <input type="number" name="pages">
           <br>
           <Label for "">IBN</Label>
           <br>
@@ -30,17 +37,22 @@
           <br>
           <input type="text" name="category">
           <br>
-          <Label for "">Publisher</Label>
+          <Label for "">publisher</Label>
           <br>
-          <input type="text" name="yearofPublication">
+          <input type="text" name="publisher">
           <br>
-          <Label for "">Year if Publication</Label>
+          <Label for "">Year of Publication</Label>
           <br>
-          <input type="text" name="name">
+          <input type="number" name="yearofPublication">
           <br>
-          <Label for "">users</Label>
+         
+          <Label for "">user_id</Label>
           <br>
-          <input type="text" name="user_id">
+          <select name="user_id" id="">
+            @foreach($users as $user)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+            @endforeach
+          </select>
           <br><br>
           <button type="submit">Submit</button>
                 <br><br>

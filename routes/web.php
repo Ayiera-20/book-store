@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route:: get('/books',[BooksController::class,'index']);
+Route::post('/submit-form',[BooksController::class,'index','store'])->name('submit-form');
